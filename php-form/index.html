@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+	<meta name="format-detection" content="telephone=no">
+	<title>新闻管理系统</title>
+	<style>
+		body{margin:0;padding:0;font-family:'helvetica neue', tahoma, 'hiragino sans gb', stheiti, 'wenquanyi micro hei', Microsoft YaHei, SimSun, sans-serif;line-height:1;}
+		body{padding:20px 50px;}
+		</style>
+</head>
+<body>
+<form action="./index.php" method="get">
+	<p>
+		<label for="newstitle">新闻标题：</label>
+		<input type="text" id="newstitle" name="newstitle"/>
+	</p>
+	<p>
+		<label for="newsimg">图片地址：</label>
+		<input type="text" id="newsimg" name="newsimg"/>
+	</p>
+	<p>
+		<label for="newscontent">新闻内容：</label>
+		<textarea name="newscontent" id="newscontent" cols="30" rows="10"></textarea>
+	</p>
+	<p>
+		<label for="addtime">新闻时间：</label>
+		<input type="date" id="addtime" name="addtime"/>
+	</p>
+	<p>
+		<input type="submit" value="提交"/>
+		<input type="reset" value="重置"/>
+	</p>
+</form>
+</body>
+</html>
