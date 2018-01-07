@@ -28,6 +28,7 @@ if(isset($_POST['pubMsg'])){
 	// 将其组成关联数组
 	$data = compact('username','title','content','time');
 	// 判断是否为编辑模式
+	var_dump($_POST['editId']);
 	if(isset($_POST['editId'])){
 		$msgs[$_POST['editId']-1] = $data;
 		$msgs = serialize($msgs);
@@ -108,16 +109,16 @@ if(isset($_GET['deleteId'])){
 	    <td>内容</td>
 	    <td>操作</td>
 	</tr>
-	<?php foreach ($msgs as $key => $value):?>
+	<?php foreach (array_reverse($msgs) as $key => $value):?>
 		<tr>
-			<td><?php echo $key+1; ?></td>
+			<td><?php echo count($msgs)-$key; ?></td>
 		    <td><?php echo $value['username']; ?></td>
 		    <td><?php echo $value['title']; ?></td>
-		    <td><?php echo date("Y-d-m H:i:s",$value['time']); ?></td>
+		    <td><?php echo date("Y-m-d H:i:s",$value['time']); ?></td>
 		    <td><?php echo $value['content']; ?></td>
 		    <td>
-		    	<a href="./index.php?editId=<?php echo $key+1; ?>#edit">编辑</a>
-		    	<a href="javascript:void(0);" onclick="deleteFn(<?php echo $key+1; ?>);">删除</a>
+		    	<a href="./index.php?editId=<?php echo count($msgs)-$key; ?>#edit">编辑</a>
+		    	<a href="javascript:void(0);" onclick="deleteFn(<?php echo count($msgs)-$key; ?>);">删除</a>
 		    </td>
 		</tr>
 	<?php endforeach; ?>
@@ -137,7 +138,7 @@ if(isset($_GET['deleteId'])){
 			<h2 id="#edit">请编辑：</h2>
 			<p>
 			    <label for="editId">编号</label>
-			    <input type="text" id="editId" name="editId" placeholder="请输入用户名" value="<?php echo @$_GET['editId']; ?>" disabled="disabled">
+			    <input type="text" id="editId" name="editId" placeholder="请输入用户名" value="<?php echo @$_GET['editId']; ?>" readonly="readonly">
 			</p>
 			<?php else: ?>
 		    <h2>请留言：</h2>
