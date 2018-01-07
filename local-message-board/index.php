@@ -88,7 +88,7 @@ if(isset($_GET['deleteId'])){
         h1{float:left;margin:0;line-height:40px;padding-right:30px;}
         .header_btn{height:40px;line-height:40px;padding:0 12px;float:left;background:purple;color:#fff;border-radius:5px;cursor:pointer;-webkit-transition:all .4s;transition:all .4s;}
         .header_btn:hover{color:red;}
-        td{padding:12px;}
+        td{padding:12px;line-height:1.4;text-align: justify;word-break:break-all;}
         td:last-child{text-align:center;}
         td:nth-of-type(1),td:nth-of-type(6){width:8%;text-align:center;}
         td:nth-of-type(2),td:nth-of-type(3),td:nth-of-type(4){width:12%;text-align:center;}
