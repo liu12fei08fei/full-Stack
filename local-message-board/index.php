@@ -72,8 +72,6 @@ if(isset($_GET['deleteId'])){
         body{margin:0;padding:0;font-family:'helvetica neue', tahoma, 'hiragino sans gb', stheiti, 'wenquanyi micro hei', Microsoft YaHei, SimSun, sans-serif;line-height:1;padding:20px 20px 50px;}
         a{font-size:14px;padding:2px 6px;border:solid 1px red;margin:4px;display:inline-block;border-radius:3px;color:purple;text-decoration: none;-webkit-transition:all .6s;transition:all .6s;}
         a:hover{-webkit-transform:scale(1.2);transform:scale(1.2);}
-        .tips{}
-        .tips_show{}
         .tips_bg{position:fixed;top:0;right:0;bottom:0;left:0;background:rgba(0,0,0,.3);z-index:998;-webkit-transform-origin:top;transform-origin:top;-webkit-transition:all .6s;transition:all .6s;-webkit-transform:scaleY(0);transform:scaleY(0);}
         .tips_box{position:fixed;top:50%;left:50%;-webkit-transform:translate(-50%,-150%);transform:translate(-50%,-150%);background:#fff;border:solid 2px red;border-radius:5px;padding:10px 50px;-webkit-box-shadow:0 2px 10px rgba(0,0,0,.4);box-shadow:0 2px 10px rgba(0,0,0,.4);z-index: 999;-webkit-transition:all .6s;transition:all .6s;opacity:0;pointer-events:none;}
         .tips_show .tips_bg{-webkit-transform:scaleY(1);transform:scaleY(1);}
@@ -92,6 +90,8 @@ if(isset($_GET['deleteId'])){
         .header_btn:hover{color:red;}
         td{padding:12px;}
         td:last-child{text-align:center;}
+        td:nth-of-type(1),td:nth-of-type(6){width:8%;text-align:center;}
+        td:nth-of-type(2),td:nth-of-type(3),td:nth-of-type(4){width:12%;text-align:center;}
     </style>
 </head>
 <body>
