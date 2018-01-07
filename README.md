@@ -8,6 +8,10 @@
 
 ## local-message-board
 
-* 使用`php`+`js`制作本地留言版，实现一个页面进行`增删改查`
+* 使用`form`+`php`+`js`制作本地留言版，实现一个页面进行`增删改查`
+
+## mysql-message-board
+
+* 使用`form`+`php`+`mysql`，实现的留言板
 
 

@@ -118,7 +118,7 @@ if(isset($_GET['deleteId'])){
 		    <td><?php echo $value['content']; ?></td>
 		    <td>
 		    	<a href="./index.php?editId=<?php echo count($msgs)-$key; ?>">编辑</a>
-		    	<a href="javascript:void(0);" onclick="deleteFn(<?php echo count($msgs)-$key; ?>);">删除</a>
+		    	<a href="javascript:void(0);" onclick="deleteFn('<?php echo count($msgs)-$key; ?>');">删除</a>
 		    </td>
 		</tr>
 	<?php endforeach; ?>

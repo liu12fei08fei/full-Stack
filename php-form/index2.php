@@ -18,7 +18,7 @@ $addtime = "2018-08-08";
 // $sql = "UPDATE `news` SET `newstitle`='神器的世界' WHERE `newsid`=3";
 
 // 查找news中所有数据的MySQL语句-查
-// $sql = 'SELECT * FROM `news`';
+$sql = 'SELECT * FROM `news`';
 
 // 设置编码信息
 mysqli_query($con,'set names utf8');
