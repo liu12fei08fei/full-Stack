@@ -14,4 +14,7 @@
 
 * 使用`form`+`php`+`mysql`，实现的留言板
 
+## ajax-message-board
+
+* 使用`ajax`+`php`+`mysql`，实现留言板
 
