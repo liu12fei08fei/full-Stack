@@ -117,7 +117,7 @@ if(isset($_GET['deleteId'])){
 		    <td><?php echo date("Y-m-d H:i:s",$value['time']); ?></td>
 		    <td><?php echo $value['content']; ?></td>
 		    <td>
-		    	<a href="./index.php?editId=<?php echo count($msgs)-$key; ?>#edit">编辑</a>
+		    	<a href="./index.php?editId=<?php echo count($msgs)-$key; ?>">编辑</a>
 		    	<a href="javascript:void(0);" onclick="deleteFn(<?php echo count($msgs)-$key; ?>);">删除</a>
 		    </td>
 		</tr>
@@ -167,6 +167,33 @@ if(isset($_GET['deleteId'])){
 	</div>
 </div>
 <script>
+// 优化编辑
+getQueryStringArgs().editId?$('#username').focus():'';
+// 添加留言
+$('.header_btn').onclick = function(){
+	$('.tips').className = 'tips tips_show';
+	$('#username').focus();
+}
+// 关闭留言操作板
+$('.tips_shut').onclick = function(){
+	$('.tips').className = 'tips';
+	setTimeout(function(){
+		location.replace('./index.php')
+	},600);
+}
+/**
+ * [$ 封装获取选择器]
+ * @param  {[type]} ele [选择器名]
+ * @return {[type]}     [选择指定DOM]
+ */
+function $(ele){
+	return document.querySelector(ele);
+}
+/**
+ * [deleteFn 删除指定留言板]
+ * @param  {[type]} id [留言编号]
+ * @return {[type]}    [删除并跳转]
+ */
 function deleteFn(id){
 	if(confirm('确定删除[编号'+id+']的用户吗？')){
 		location.href = "./index.php?deleteId="+id;
@@ -174,19 +201,33 @@ function deleteFn(id){
 		// location.href = "./index.php";
 	}
 }
-var tips = document.querySelector('.tips');
-var tipsShut = document.querySelector('.tips_shut');
-var headerBtn = document.querySelector('.header_btn');
-var username = document.querySelector('#username');
-headerBtn.onclick = function(){
-	tips.className = 'tips tips_show';
-	username.focus();
-}
-tipsShut.onclick = function(){
-	tips.className = 'tips';
-	setTimeout(function(){
-		location.replace('./index.php')
-	},600);
+/**
+ * [getQueryStringArgs 查询字符串转化成对象的属性]
+ * @return {[type]} [Object]
+ */
+function getQueryStringArgs(){
+    // 取得查询字符串并去掉开头的问号
+    var qs = (location.search.length>0?location.search.substring(1):""),
+    // 保存数据的对象
+    args = {},
+    // 取得每一项
+    items = qs.length?qs.split("&"):[],
+    item = null,
+    name = null,
+    value = null,
+    // 在for循环中使用
+    i = 0,
+    len = items.length;
+    // 逐个将每一项添加到args对象中
+    for(i=0;i<len;i++){
+        item = items[i].split("=");
+        name = decodeURIComponent(item[0]);
+        value = decodeURIComponent(item[1]);
+        if(name.length){
+            args[name] = value;
+        }
+    }
+    return args;
 }
 </script>
 </body>
