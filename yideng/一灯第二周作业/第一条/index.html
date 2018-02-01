@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>点赞</title>
+    <style>
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: 'helvetica neue', tahoma, 'hiragino sans gb', stheiti, 'wenquanyi micro hei', Microsoft YaHei, SimSun, sans-serif;
+        line-height: 1;
+    }
+
+    .btn {
+        height: 60px;
+        line-height: 60px;
+        background: red;
+        color: #fff;
+        cursor: pointer;
+        text-align: center;
+        font-size: 20px;
+    }
+
+    .btn:active {
+        background: purple;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="btn">0</div>
+    <script src="https://cdn.bootcss.com/axios/0.17.1/axios.min.js"></script>
+    <script>
+    // 获取
+    var list = {
+        operation:'request'
+    };
+    getRequest(list,function(response){
+        console.log(response)
+        document.querySelector('.btn').innerHTML = response.data[0].num;
+    });
+    document.querySelector('.btn').onclick = function() {
+        var that = this;
+        var num = document.querySelector('.btn').innerHTML;
+        var data = {
+            num:add(num),
+            operation:'add'
+        };
+        // 增加
+        getRequest(data,function(response){
+            that.innerHTML = response.data[0].num;
+        });
+    }
+    function add(num){
+        return num++;
+    }
+    function getRequest(data,callback){
+        axios.get('./index.php',{
+            params:data
+        })
+            .then(function(response) {
+                var status = response.status;
+                if(status>=200&&status<300||status==304){
+                    callback&&callback(response);
+                }else{
+                    console.log(response.statusText);
+                }
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+    }
+    </script>
+</body>
+
+</html>
