@@ -26,13 +26,15 @@ var PraiseButton = function () {
             var _this = this;
 
             this.element.click(function () {
-                if (_this.num < 10) {
+                if (_this.num <= 9) {
                     _this.element.removeClass('hand_active');
                     _this.element.attr('title', _this.num);
+                    _this.element.find('.num').text(_this.num);
                     _this.num = add(_this.num);
                 } else {
                     _this.element.addClass('hand_active');
                     _this.element.attr('title', _this.num);
+                    _this.element.find('.num').text(_this.num);
                     _this.num = 0;
                 }
                 console.log(_this.num);

@@ -261,7 +261,7 @@
         <div class="finger"></div>
         <div class="finger thumb"></div>
         <div class="arm"></div>
-        <span>0</span>
+        <span class="num">0</span>
     </div>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.js"></script>
     <script src="index.js"></script>
@@ -277,7 +277,7 @@
             callBack();
         });
         function callBack(){
-            let q = new $.thumb(0,$(".hand"));
+            let q = new $.thumb(1,$(".hand"));
             q.clickAction();
         }
     </script>
