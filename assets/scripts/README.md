@@ -14,45 +14,37 @@
 
 ### axios.min.js
 
-* 实际地址：[http://www.coohua.com/assets/scripts/axios.min.js](http://www.coohua.com/assets/scripts/axios.min.js)
 * Axios 是一个基于 promise 的 HTTP 库，可以用在浏览器和 node.js 中。
 * XMLHttpRequests，异步请求使用
 
 ### clipboard.min.js
 
-* 实际地址：[http://www.coohua.com/assets/scripts/clipboard.min.js](http://www.coohua.com/assets/scripts/clipboard.min.js)
 * clipboard.js是一款轻量级的实现复制文本到剪贴板功能的JavaScript插件
 
 ### des.js
 
-* 实际地址：[http://www.coohua.com/assets/scripts/des.js](http://www.coohua.com/assets/scripts/des.js)
 * 加密文件
 * 和旧打点合作
 
 ### WebBridge.js
 
-* 实际地址：[http://www.coohua.com/assets/scripts/WebBridge.js](http://www.coohua.com/assets/scripts/WebBridge.js)
 * 目前仅限ios，前端和客户端交流的基础方法
 
 ### sensorsdata.min.js
 
-* 实际地址：[http://www.coohua.com/assets/scripts/sensorsdata.min.js](http://www.coohua.com/assets/scripts/sensorsdata.min.js)
 * 新打点系统之一
 * 和`sensorsdataprod.js`或`sensorsdatatest.js`合作打点
 
 **sensorsdataprod.js**
 
-* 实际地址：[http://www.coohua.com/assets/scripts/sensorsdataprod.js](http://www.coohua.com/assets/scripts/sensorsdataprod.js)
 * 是线上打点地址
 
 **sensorsdatatest.js**
 
-* 实际地址：[http://www.coohua.com/assets/scripts/sensorsdatatest.js](http://www.coohua.com/assets/scripts/sensorsdatatest.js)
 * 是测试打点地址
 
 ### vue.min.js
 
-* 实际地址：[http://www.coohua.com/assets/scripts/vue.min.js](http://www.coohua.com/assets/scripts/vue.min.js)
 * 使用vue进行开发
 
 ## 常用方法总结
