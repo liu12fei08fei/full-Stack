@@ -1,0 +1,27 @@
+/*placeholder默认颜色*/
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #909;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color:    #909;
+   opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color:    #909;
+   opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color:    #909;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+   color:    #909;
+}
+
+/*页面元素结构*/
+/** { outline: 4px solid yellow; }*/
+
+/* 增加可访问性：不要忘记添加 `alt` 属性 */
+img[alt=""],
+img:not([alt]){
+    border:5px dashed #c00;
+}
