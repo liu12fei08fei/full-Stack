@@ -152,7 +152,7 @@ function requestGet(url,data,callback){
             params: data
         })
         .then(function(response) {
-            let status = response.status;
+            var status = response.status;
             if (status >= 200 && status < 300 || status == 304) {
                 callback&&callback(response);
             } else {
@@ -174,7 +174,7 @@ function requestGet(url,data,callback){
 function requestPost(url,data,callback){
     axios.post(url, data)
         .then(function(response) {
-            let status = response.status;
+            var status = response.status;
             if ((status >= 200 && status < 300) || status == 304) {
                 callback&&callback(response);
             }else{
@@ -390,4 +390,38 @@ function base64Decode(base64){
     // 编码转字符串
     var str = decodeURI(decode);
     return str;
+}
+
+/**
+ * 酷划CMS物料获取，即获取指定规则的下载地址
+ * [依赖requestGet方法]
+ * [id的获取使用getQueryStringArgs即可]
+ * @param  {string}   id       和产品定义的参数
+ * @param  {Function} callback 由于需要发请求，所以必须使用回调函数才能获取随机地址【注：地址的返回已经进行了随机处理】
+ * @return {empty}            无
+ */
+function getMaterial(id,callback){
+    requestGet('http://cms001.oss-cn-beijing.aliyuncs.com/coohua_jump/0P0QCQwIUn2Qh1LZ.html',{},function(data){
+        var data = data.data;
+        var isAn = isAndroid();
+        // 系统参数
+        var systemArr = ['ios_url','andriod_url'];
+        var system = systemArr[Number(isAn)];
+        // 处理掉<script type="text/javascript">前面的字符
+        var before = data.split('<script type="text\/javascript">')[1];
+        // 处理<\/script>后面的字符
+        var after = before.split('<\/script>')[0].replace(/\s/,'');
+        // 使用解释型语言的特性
+        eval(after);
+        // 过滤出我们需要的物料
+        var arrEnd = channelList.filter(function(item,idx){
+            return item.title == id;
+        })[0];
+        // 得到当先系统下的路径集合
+        var urlArr = arrEnd[system];
+        var random = Math.floor(Math.random()*urlArr.length);
+        var urlEnd = urlArr[random].iosUrl;
+        // 把物料-即下载地址返回
+        callback&&callback(urlEnd);
+    });
 }

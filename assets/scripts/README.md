@@ -78,7 +78,7 @@ callHandler(JSON.stringify(data), function (data) {
 * 这里收藏了常用的方法，都是全局方法，具体使用的时候可以先跟客户端沟通，防止出现问题
 
 ```
-// 酷划ticket接口
+// 酷划baseKey接口
 var baseKey = window.$CooHua?window.$CooHua.getBaseKey():'';
 
 // 酷划id接口
