@@ -422,10 +422,23 @@ function getMaterial(url,id,callback){
         })[0];
         // 得到当先系统下的路径集合
         var urlArr = arrEnd[system];
-        console.log(urlArr)
         var random = Math.floor(Math.random()*urlArr.length);
         var urlEnd = urlArr[random][urlPara[Number(isAn)]];
         // 把物料-即下载地址返回
         callback&&callback(urlEnd);
     });
+}
+
+/**
+ * 是否来自微信内置浏览器，true是微信内置浏览器
+ * @return {Boolean} true/false
+ */
+function isWeiXin() {
+    var ua = window.navigator.userAgent.toLowerCase();
+    // console.log(ua); //mozilla/5.0 (iphone; cpu iphone os 9_1 like mac os x) applewebkit/601.1.46 (khtml, like gecko)version/9.0 mobile/13b143 safari/601.1
+    if (ua.match(/MicroMessenger/i) == 'micromessenger') {
+        return true;
+    } else {
+        return false;
+    }
 }
