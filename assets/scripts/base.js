@@ -396,16 +396,19 @@ function base64Decode(base64){
  * 酷划CMS物料获取，即获取指定规则的下载地址
  * [依赖requestGet方法]
  * [id的获取使用getQueryStringArgs即可]
+ * @param  {string}   url      物料地址，产品给出
  * @param  {string}   id       和产品定义的参数
  * @param  {Function} callback 由于需要发请求，所以必须使用回调函数才能获取随机地址【注：地址的返回已经进行了随机处理】
  * @return {empty}            无
  */
-function getMaterial(id,callback){
-    requestGet('http://cms001.oss-cn-beijing.aliyuncs.com/coohua_jump/0P0QCQwIUn2Qh1LZ.html',{},function(data){
+function getMaterial(url,id,callback){
+    requestGet(url,{},function(data){
         var data = data.data;
         var isAn = isAndroid();
         // 系统参数
         var systemArr = ['ios_url','andriod_url'];
+        var urlPara = ['iosUrl','andriodUrl'];//之所以定义这个，是返回json定义的问题
+        // var sys
         var system = systemArr[Number(isAn)];
         // 处理掉<script type="text/javascript">前面的字符
         var before = data.split('<script type="text\/javascript">')[1];
@@ -419,8 +422,9 @@ function getMaterial(id,callback){
         })[0];
         // 得到当先系统下的路径集合
         var urlArr = arrEnd[system];
+        console.log(urlArr)
         var random = Math.floor(Math.random()*urlArr.length);
-        var urlEnd = urlArr[random].iosUrl;
+        var urlEnd = urlArr[random][urlPara[Number(isAn)]];
         // 把物料-即下载地址返回
         callback&&callback(urlEnd);
     });
