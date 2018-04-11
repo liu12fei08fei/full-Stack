@@ -1,4 +1,11 @@
 /**
+ * @fileOverview 常用工具封装
+ * @author liufeifei@coohua.com
+ * @author 钉钉：liu12fei08fei
+ * @copyright 刘非非
+ */
+
+/**
  * 新埋点方法封装
  * [依赖sensorsdata.min.js和sensorsdataprod.js/sensorsdatatest.js]
  * @param  {string}   element_page 埋点页面名称
@@ -15,6 +22,41 @@ function buriedPoint(element_page, element_name, os, userId, callback) {
         page_url: location.href,
         os: os,
         userId: userId
+    }, function() {
+        callback && callback();
+    });
+}
+
+/**
+ * 新埋点，为了兼容老版本，从新封装一个方法，把渠道、版本、微信分享id添加进去
+ * @param  {string}   eventName 埋点事件名称
+ * @param  {object}   data      埋点所需参数，给默认值，如果没有为空string
+ * @param  {Function} callback  回调函数
+ * @return {empty}             返回也不好用，有什么好返回的
+ */
+function mostBuriedPoint(eventName,data,callback){
+    // 获取渠道号
+    var ch = getQueryStringArgs().ch||'';
+    // 生成随机数
+    var rd = 'coohua' + String(Math.random()).slice(2);
+    // 获取缓存中share_id的值，即：微信分享id
+    var shareId = localStorage.getItem("share_id");
+    if(!shareId){
+        // 不存在，创建share_id
+        localStorage.setItem('share_id', rd);
+        // 对变量赋值
+        shareId = rd;
+    }
+    // 进行埋点
+    sa.track(eventName, {
+        element_page: data.element_page||'',//页面名称
+        element_name: data.element_name||'',//位置名称
+        page_url: location.href,//页面地址
+        os: data.os,//系统ios/android
+        userId: data.userId||'',//用户id
+        channel:ch,//渠道号
+        app_version:data.app_version||'',//app版本号
+        share_id:shareId,//微信分享id
     }, function() {
         callback && callback();
     });
