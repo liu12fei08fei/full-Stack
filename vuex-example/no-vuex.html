@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+	<meta name="format-detection" content="telephone=no">
+	<title>no-vuex</title>
+</head>
+<body>
+	<div id="app">
+	    <p>{{ count }}</p>
+	    <p>
+	        <button @click="increment">+</button>
+	        <button @click="decrement">-</button>
+	    </p>
+	</div>
+	<script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.js"></script>
+	<script>
+		new Vue({
+			el:'#app',
+			data:{
+				count:0
+			},
+			methods:{
+				increment(){
+					this.count++;
+				},
+				decrement(){
+					this.count--;
+				}
+			}
+		})
+	</script>
+</body>
+</html>

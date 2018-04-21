@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <meta name="format-detection" content="telephone=no">
+    <title>vuex-example</title>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{ count }}</p>
+        <p>
+            <button @click="increment">+</button>
+            <button @click="decrement">-</button>
+        </p>
+    </div>
+    <script src="https://cdn.bootcss.com/vue/2.5.17-beta.0/vue.js"></script>
+    <script src="https://cdn.bootcss.com/vuex/3.0.1/vuex.js"></script>
+    <script>
+    // 使用模块系统，要记得Vue.use(Vuex)
+    const store = new Vuex.Store({
+        state: {
+            count: 0
+        },
+        mutations: {
+            increment: state => state.count++,
+            decrement: state => state.count--
+        }
+    })
+
+    new Vue({
+        el: '#app',
+        computed: {
+            count() {
+                return store.state.count
+            }
+        },
+        methods: {
+            increment() {
+                store.commit('increment')
+            },
+            decrement() {
+                store.commit('decrement')
+            }
+        }
+    })
+    </script>
+</body>
+
+</html>
