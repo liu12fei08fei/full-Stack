@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  * @fileOverview 常用工具封装-1
  * @author liufeifei@coohua.com
@@ -22,7 +24,7 @@ function buriedPoint(element_page, element_name, os, userId, callback) {
         page_url: location.href,
         os: os,
         userId: userId
-    }, function() {
+    }, function () {
         callback && callback();
     });
 }
@@ -34,14 +36,14 @@ function buriedPoint(element_page, element_name, os, userId, callback) {
  * @param  {Function} callback  回调函数
  * @return {empty}             返回也不好用，有什么好返回的
  */
-function mostBuriedPoint(eventName,data,callback){
+function mostBuriedPoint(eventName, data, callback) {
     // 获取渠道号
-    var ch = getQueryStringArgs().ch||'';
+    var ch = getQueryStringArgs().ch || '';
     // 生成随机数
     var rd = 'coohua' + String(Math.random()).slice(2);
     // 获取缓存中share_id的值，即：微信分享id
     var shareId = localStorage.getItem("share_id");
-    if(!shareId){
+    if (!shareId) {
         // 不存在，创建share_id
         localStorage.setItem('share_id', rd);
         // 对变量赋值
@@ -49,23 +51,23 @@ function mostBuriedPoint(eventName,data,callback){
     }
     // 定义基本参数
     var params = {
-        element_page: data.element_page||'',//页面名称
-        element_name: data.element_name||'',//位置名称
-        page_url: location.href,//页面地址
-        os: data.os,//系统ios/android
-        userId: data.userId||'',//用户id
-        share_channel:ch,//渠道号
-        app_version:data.app_version||'',//app版本号
-        share_id:shareId,//微信分享id
+        element_page: data.element_page || '', //页面名称
+        element_name: data.element_name || '', //位置名称
+        page_url: location.href, //页面地址
+        os: data.os, //系统ios/android
+        userId: data.userId || '', //用户id
+        share_channel: ch, //渠道号
+        app_version: data.app_version || '', //app版本号
+        share_id: shareId //微信分享id
     };
     // 增加其他埋点参数，会有一些莫名的在这里添加，会以data.other:{id:'',name:''}的形式传入
-    var arr = data.other||[];
-    arr.forEach(function(item,idx){
+    var arr = data.other || [];
+    arr.forEach(function (item, idx) {
         // 把所有埋点添加到params名下
         params[item.id] = item.name;
     });
     // 进行埋点
-    sa.track(eventName, params, function() {
+    sa.track(eventName, params, function () {
         callback && callback();
     });
 }
@@ -94,7 +96,8 @@ function fromatDate(timestamp) {
  * @return {number}   返回双数格式数字
  */
 function evenNum(n) {
-    return /^\d\d$/.test(n) ? '' + n : '0' + n;
+    return (/^\d\d$/.test(n) ? '' + n : '0' + n
+    );
 }
 
 /**
@@ -106,9 +109,9 @@ function isAndroid() {
     _.WIN = window;
     _.NA = _.WIN.navigator;
     _.UA = _.NA.userAgent.toLowerCase();
-    _.test = function(needle) {
+    _.test = function (needle) {
         return needle.test(_.UA);
-    }
+    };
     _.isAndroid = _.test(/android|htc/) || /linux/i.test(_.NA.platform + "");
     return _.isAndroid;
 }
@@ -145,7 +148,7 @@ function countdownFormat(second) {
  * @param  {Function} callback 回调函数
  * @return {empty}            空
  */
-function remoteLog(action,callback) {
+function remoteLog(action, callback) {
     var ua = navigator.userAgent.toLowerCase();
     var url = "http://log.coohua.com/domain_click.txt";
     var uid = 0;
@@ -154,20 +157,17 @@ function remoteLog(action,callback) {
     } else {
         url += '&src=new&action=' + action + '&time=' + new Date().getTime() + '&cid=' + vm.coohuaId + '&uid=' + '&url=' + strEnc(window.location.href, 'coohua@#2014') + '&ch=' + getParam("ch") + '&next_url=' + strEnc(window.location.href, 'coohua@#2014');
     }
-    axios.get(url)
-      .then(function (response) {
+    axios.get(url).then(function (response) {
         var status = response.data.status;
-        if(status==1){
+        if (status == 1) {
             // 请求通过,执行下一步
-            callback&&callback();
-        }else{
+            callback && callback();
+        } else {
             console.log('请求埋点失败！');
         }
-      })
-      .catch(function (error) {
+    }).catch(function (error) {
         console.log(error);
-      });
-
+    });
 }
 
 /**
@@ -186,8 +186,19 @@ function getParam(param) {
  * 查询字符串转对象
  * @return {object} 返回对象
  */
-function getQueryStringArgs(){
-	var qs = (location.search.length > 0 ? location.search.substring(1) : ""), args = {}, items = qs.length ? qs.split("&") : [], item = null, name = null, value = null, i = 0, len = items.length; for (i = 0; i < len; i++) { item = items[i].split("="); name = decodeURIComponent(item[0]); value = decodeURIComponent(item[1]); if (name.length) { args[name] = value } } return args;
+function getQueryStringArgs() {
+    var qs = location.search.length > 0 ? location.search.substring(1) : "",
+        args = {},
+        items = qs.length ? qs.split("&") : [],
+        item = null,
+        name = null,
+        value = null,
+        i = 0,
+        len = items.length;for (i = 0; i < len; i++) {
+        item = items[i].split("=");name = decodeURIComponent(item[0]);value = decodeURIComponent(item[1]);if (name.length) {
+            args[name] = value;
+        }
+    }return args;
 }
 
 /**
@@ -197,21 +208,19 @@ function getQueryStringArgs(){
  * @param  {Function} callback 回调函数
  * @return {empty}            空
  */
-function requestGet(url,data,callback){
+function requestGet(url, data, callback) {
     axios.get(url, {
-            params: data
-        })
-        .then(function(response) {
-            var status = response.status;
-            if (status >= 200 && status < 300 || status == 304) {
-                callback&&callback(response);
-            } else {
-                console.log(response.statusText);
-            }
-        })
-        .catch(function(error) {
-            console.log(error);
-        });
+        params: data
+    }).then(function (response) {
+        var status = response.status;
+        if (status >= 200 && status < 300 || status == 304) {
+            callback && callback(response);
+        } else {
+            console.log(response.statusText);
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
 }
 
 /**
@@ -221,19 +230,17 @@ function requestGet(url,data,callback){
  * @param  {Function} callback 回调函数
  * @return {empty}            空
  */
-function requestPost(url,data,callback){
-    axios.post(url, data)
-        .then(function(response) {
-            var status = response.status;
-            if ((status >= 200 && status < 300) || status == 304) {
-                callback&&callback(response);
-            }else{
-                console.log(response.statusText);
-            }
-        })
-        .catch(function(error) {
-            console.log(error);
-        });
+function requestPost(url, data, callback) {
+    axios.post(url, data).then(function (response) {
+        var status = response.status;
+        if (status >= 200 && status < 300 || status == 304) {
+            callback && callback(response);
+        } else {
+            console.log(response.statusText);
+        }
+    }).catch(function (error) {
+        console.log(error);
+    });
 }
 
 /**
@@ -241,27 +248,26 @@ function requestPost(url,data,callback){
  * @param  {number} n 提前天数
  * @return {string}   格式化的时间，即：2018-08-08
  */
-function getBeforeDate(n){
+function getBeforeDate(n) {
     var n = n;
     var d = new Date();
     var year = d.getFullYear();
-    var mon=d.getMonth()+1;
-    var day=d.getDate();
-    if(day <= n){
-            if(mon>1) {
-               mon=mon-1;
-            }
-           else {
-             year = year-1;
-             mon = 12;
-             }
-           }
-          d.setDate(d.getDate()-n);
-          year = d.getFullYear();
-          mon=d.getMonth()+1;
-          day=d.getDate();
-     s = year+"-"+(mon<10?('0'+mon):mon)+"-"+(day<10?('0'+day):day);
-     return s;
+    var mon = d.getMonth() + 1;
+    var day = d.getDate();
+    if (day <= n) {
+        if (mon > 1) {
+            mon = mon - 1;
+        } else {
+            year = year - 1;
+            mon = 12;
+        }
+    }
+    d.setDate(d.getDate() - n);
+    year = d.getFullYear();
+    mon = d.getMonth() + 1;
+    day = d.getDate();
+    s = year + "-" + (mon < 10 ? '0' + mon : mon) + "-" + (day < 10 ? '0' + day : day);
+    return s;
 }
 
 /**
@@ -269,13 +275,13 @@ function getBeforeDate(n){
  * @param  {array} arr array去重数组
  * @return {array}     去重之后的数组
  */
-function objectHeavy(arr){
+function objectHeavy(arr) {
     var unique = {};
-    arr.forEach(function(item) {
-        unique[JSON.stringify(item)] = item
+    arr.forEach(function (item) {
+        unique[JSON.stringify(item)] = item;
     });
-    return Object.keys(unique).map(function(uitem) {
-        return JSON.parse(uitem)
+    return Object.keys(unique).map(function (uitem) {
+        return JSON.parse(uitem);
     });
 }
 
@@ -284,8 +290,8 @@ function objectHeavy(arr){
  * @param  {object} obj 要格式化的object
  * @return {object}     不变，object
  */
-function dataFormat(obj){
-    var _data = JSON.stringify(obj,null,4);
+function dataFormat(obj) {
+    var _data = JSON.stringify(obj, null, 4);
     console.log(_data);
     return _data;
 }
@@ -297,10 +303,10 @@ function dataFormat(obj){
  * @param {string} value 参数值
  * @return {object}      合成之后的地址
  */
-function addQueryStringArg(url, name, value){
-    if(url.indexOf("?")==-1){
+function addQueryStringArg(url, name, value) {
+    if (url.indexOf("?") == -1) {
         url += "?";
-    }else{
+    } else {
         url += "&";
     }
 
@@ -313,8 +319,8 @@ function addQueryStringArg(url, name, value){
  * @param  {object}  object object
  * @return {Boolean}        true/false
  */
-function isString(object){
-    return Object.prototype.toString.call(object)==='[object String]';
+function isString(object) {
+    return Object.prototype.toString.call(object) === '[object String]';
 }
 
 /**
@@ -322,8 +328,8 @@ function isString(object){
  * @param  {object}  object object
  * @return {Boolean}        true/false
  */
-function isNumber(object){
-    return Object.prototype.toString.call(object)==='[object Number]';
+function isNumber(object) {
+    return Object.prototype.toString.call(object) === '[object Number]';
 }
 
 /**
@@ -331,8 +337,8 @@ function isNumber(object){
  * @param  {object}  object object
  * @return {Boolean}        true/false
  */
-function isBoolean(object){
-    return Object.prototype.toString.call(object)==='[object Boolean]';
+function isBoolean(object) {
+    return Object.prototype.toString.call(object) === '[object Boolean]';
 }
 
 /**
@@ -340,8 +346,8 @@ function isBoolean(object){
  * @param  {object}  object object
  * @return {Boolean}        true/false
  */
-function isUndefined(object){
-    return Object.prototype.toString.call(object)==='[object Undefined]';
+function isUndefined(object) {
+    return Object.prototype.toString.call(object) === '[object Undefined]';
 }
 
 /**
@@ -349,8 +355,8 @@ function isUndefined(object){
  * @param  {object}  object object
  * @return {Boolean}        true/false
  */
-function isNull(object){
-    return Object.prototype.toString.call(object)==='[object Null]';
+function isNull(object) {
+    return Object.prototype.toString.call(object) === '[object Null]';
 }
 
 /**
@@ -358,8 +364,8 @@ function isNull(object){
  * @param  {object}  object object
  * @return {Boolean}        true/false
  */
-function isSymbol(object){
-    return Object.prototype.toString.call(object)==='[object Symbol]';
+function isSymbol(object) {
+    return Object.prototype.toString.call(object) === '[object Symbol]';
 }
 
 /**
@@ -367,8 +373,8 @@ function isSymbol(object){
  * @param  {object}  object object
  * @return {Boolean}        true/false
  */
-function isObject(object){
-    return Object.prototype.toString.call(object)==='[object Object]';
+function isObject(object) {
+    return Object.prototype.toString.call(object) === '[object Object]';
 }
 
 /**
@@ -376,8 +382,8 @@ function isObject(object){
  * @param  {object}  object object
  * @return {Boolean}        true/false
  */
-function isArray(object){
-    return Object.prototype.toString.call(object)==='[object Array]';
+function isArray(object) {
+    return Object.prototype.toString.call(object) === '[object Array]';
 }
 
 /**
@@ -385,8 +391,8 @@ function isArray(object){
  * @param  {object}  object object
  * @return {Boolean}        true/false
  */
-function isFunction(object){
-    return Object.prototype.toString.call(object)==='[object Function]';
+function isFunction(object) {
+    return Object.prototype.toString.call(object) === '[object Function]';
 }
 
 /**
@@ -394,8 +400,8 @@ function isFunction(object){
  * @param  {object}  object object
  * @return {Boolean}        true/false
  */
-function isDate(object){
-    return Object.prototype.toString.call(object)==='[object Date]';
+function isDate(object) {
+    return Object.prototype.toString.call(object) === '[object Date]';
 }
 
 /**
@@ -403,8 +409,8 @@ function isDate(object){
  * @param  {object}  object object
  * @return {Boolean}        true/false
  */
-function isRegExp(object){
-    return Object.prototype.toString.call(object)==='[object RegExp]';
+function isRegExp(object) {
+    return Object.prototype.toString.call(object) === '[object RegExp]';
 }
 
 /**
@@ -412,8 +418,8 @@ function isRegExp(object){
  * @param  {object}  object object
  * @return {Boolean}        true/false
  */
-function isMath(object){
-    return Object.prototype.toString.call(object)==='[object Math]';
+function isMath(object) {
+    return Object.prototype.toString.call(object) === '[object Math]';
 }
 
 /**
@@ -421,7 +427,7 @@ function isMath(object){
  * @param  {string} str 要格式化的字符串
  * @return {string}     base64格式的字符串
  */
-function base64Encode(str){
+function base64Encode(str) {
     // 对字符串进行编码
     var encode = encodeURI(str);
     // 对编码的字符串转化base64
@@ -434,7 +440,7 @@ function base64Encode(str){
  * @param  {string} base64 base64码的字符串
  * @return {string}        格式化完成的string
  */
-function base64Decode(base64){
+function base64Decode(base64) {
     // 对base64转编码
     var decode = atob(base64);
     // 编码转字符串
@@ -451,34 +457,34 @@ function base64Decode(base64){
  * @param  {Function} callback 由于需要发请求，所以必须使用回调函数才能获取随机地址【注：地址的返回已经进行了随机处理】
  * @return {string/undefined}   当获取到值的时候，返回地址；当没有指定物料的时候，返回undefined，需要我们额外处理
  */
-function getMaterial(url,id,callback){
-    requestGet(url,{},function(data){
+function getMaterial(url, id, callback) {
+    requestGet(url, {}, function (data) {
         var data = data.data;
         var isAn = isAndroid();
         // 系统参数
-        var systemArr = ['ios_url','andriod_url'];
-        var urlPara = ['iosUrl','andriodUrl'];//之所以定义这个，是返回json定义的问题
+        var systemArr = ['ios_url', 'andriod_url'];
+        var urlPara = ['iosUrl', 'andriodUrl']; //之所以定义这个，是返回json定义的问题
         // var sys
         var system = systemArr[Number(isAn)];
         // 处理掉<script type="text/javascript">前面的字符
         var before = data.split('<script type="text\/javascript">')[1];
         // 处理<\/script>后面的字符
-        var after = before.split('<\/script>')[0].replace(/\s/,'');
+        var after = before.split('<\/script>')[0].replace(/\s/, '');
         // 使用解释型语言的特性
         eval(after);
         // 过滤出我们需要的物料
-        var arrEnd = channelList.filter(function(item,idx){
+        var arrEnd = channelList.filter(function (item, idx) {
             return item.title == id;
         })[0];
         // 得到当先系统下的路径集合，容错处理
-        if(arrEnd){
+        if (arrEnd) {
             var urlArr = arrEnd[system];
-            var random = Math.floor(Math.random()*urlArr.length);
+            var random = Math.floor(Math.random() * urlArr.length);
             var urlEnd = urlArr[random][urlPara[Number(isAn)]];
             // 把物料-即下载地址返回
-            callback&&callback(urlEnd);
-        }else{
-            callback&&callback(undefined);
+            callback && callback(urlEnd);
+        } else {
+            callback && callback(undefined);
         }
     });
 }

@@ -9,6 +9,6 @@
 })({
     name: 'sa',
     show_log: true,
-    server_url: 'http://dcs.coohua.com/data/v1?project=locker'
-    // server_url: 'http://dcs.coohua.com/data/v1?project=locker_test'
+    server_url: 'http://dcs.coohua.com/data/v1?project=browser'//浏览器
+    // server_url: 'http://dcs.coohua.com/data/v1?project=locker_test'//锁屏测试
 });
