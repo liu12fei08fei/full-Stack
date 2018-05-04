@@ -470,8 +470,11 @@ function getMaterial(url, id, callback) {
         var before = data.split('<script type="text\/javascript">')[1];
         // 处理<\/script>后面的字符
         var after = before.split('<\/script>')[0].replace(/\s/, '');
+        // eval严格模式处理
+        var index = after.indexOf('var');
+        after = after.slice(index + 4)
         // 使用解释型语言的特性
-        eval(after);
+        eval('window.'+after);
         // 过滤出我们需要的物料
         var arrEnd = channelList.filter(function (item, idx) {
             return item.title == id;
