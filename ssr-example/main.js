@@ -1,4 +1,5 @@
 const Vue = require('vue')
+
 const server = require('express')()
 // 创建renderer
 const renderer = require('vue-server-renderer').createRenderer({
